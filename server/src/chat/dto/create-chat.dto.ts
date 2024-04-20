@@ -1,11 +1,16 @@
 import { Customer } from "src/customers/entities/customer.entity";
-import { Chat } from "../entities/chat.entity";
+import { Agent } from "src/agent/entities/agent.entity";
 
+export enum SessionStatus {
+    OPEN = 'open',
+    IN_SESSION = 'in_session',
+    RESOLVED = 'resolved',
+  }
 export class CreateChatDto {
-    readonly id: number;
-    readonly title: string;
-    readonly chat_sender: Customer;
-    readonly chat_receiver: Chat; // Assuming ChatDTO for self-referencing chat relationship
-    readonly session: string; // Enum is converted to string for DTO
-    readonly createdAt: Date;
-}
+    Title: string;
+    chat_sender: Customer;
+    chat_receiver: Agent;
+    session : SessionStatus;
+    chatId: number
+  }
+  

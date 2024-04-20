@@ -18,7 +18,9 @@ export class Customer {
 
   @Column()
   name: string;
-
+ 
+  @Column()
+  isBlocked : boolean
   // Each customer can send multiple messages
   @OneToMany(() => Message, (message) => message.customer_id)
   customre_message: Message[];

@@ -1,26 +1,54 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Customer } from './entities/customer.entity';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
 
 @Injectable()
 export class CustomersService {
-  create(createCustomerDto: CreateCustomerDto) {
-    return 'This action adds a new customer';
+  constructor(
+    @InjectRepository(Customer)
+    private readonly customerRepository: Repository<Customer>,
+  ) {}
+//////////////////////
+async create(createCustomerDto: CreateCustomerDto): Promise<Customer> {
+  // Check if required fields are present
+  if (!createCustomerDto.email || !createCustomerDto.phone || !createCustomerDto.name) {
+    throw new BadRequestException('Email, phone, and name are required');
   }
-
-  findAll() {
-    return `This action returns all customers`;
+  const customer = this.customerRepository.create(createCustomerDto);
+  return this.customerRepository.save(customer);
+}
+////////////////////
+  async findAll(): Promise<Customer[]> {
+    return this.customerRepository.find();
   }
-
-  findOne(id: number) {
-    return `This action returns a #${id} customer`;
+////////////////////
+  async findOne(id: number): Promise<Customer> {
+    const customer = await this.customerRepository.findOne({where:{id}});
+    if (!customer) {
+      throw new NotFoundException(`Customer with ID ${id} not found`);
+    }
+    return customer;
   }
-
-  update(id: number, updateCustomerDto: UpdateCustomerDto) {
-    return `This action updates a #${id} customer`;
+///////////////////
+  async update(id: number, updateCustomerDto: UpdateCustomerDto): Promise<Customer> {
+    const customer = await this.findOne(id);
+    const updatedCustomer = Object.assign(customer, updateCustomerDto);
+    return this.customerRepository.save(updatedCustomer);
   }
-
-  remove(id: number) {
-    return `This action removes a #${id} customer`;
+/////////////////
+  async remove(id: number): Promise<void> {
+    const result = await this.customerRepository.delete(id);
+    if (result.affected === 0) {
+      throw new NotFoundException(`Customer with ID ${id} not found`);
+    }
+  }
+////////////////
+  async blockCustomer(id: number): Promise<void> {
+    const customer = await this.findOne(id);
+    customer.isBlocked = true;
+    await this.customerRepository.save(customer);
   }
 }
