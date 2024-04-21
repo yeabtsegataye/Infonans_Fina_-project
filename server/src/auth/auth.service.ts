@@ -6,6 +6,8 @@ import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { Agent } from 'src/agent/entities/agent.entity';
 
+// this auth api is for agents to log in based on the created account for them by the admin
+
 @Injectable()
 export class AuthService {
   /////////////////
@@ -52,6 +54,7 @@ export class AuthService {
       throw new UnauthorizedException();
     }
     const payload = { id: data.id, email: data.email };
-    return { access_token: await this.jwtService.signAsync(payload) };
+    const access_token =  await this.jwtService.signAsync(payload)
+    return { access_token , payload};
   }
 }

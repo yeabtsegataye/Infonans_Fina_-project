@@ -19,7 +19,7 @@ export class Customer {
   @Column()
   name: string;
  
-  @Column()
+  @Column({default: false})
   isBlocked : boolean
   // Each customer can send multiple messages
   @OneToMany(() => Message, (message) => message.customer_id)

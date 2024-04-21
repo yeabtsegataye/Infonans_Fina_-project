@@ -7,7 +7,7 @@ import { Chat } from './entities/chat.entity';
 export class ChatController {
   constructor(private readonly chatService: ChatService) {}
 
-  @Post()
+  @Post('create')
   create(@Body() createChatDto: CreateChatDto) {
     return this.chatService.create(createChatDto);
   }
@@ -19,5 +19,9 @@ export class ChatController {
   @Patch(':id/resolved')
   async setSessionToResolved(@Param('id') id: number): Promise<Chat> {
     return this.chatService.setSessionToResolved(id);
+  }
+  @Patch('update/:id')
+  async updateChat(@Param('id') id: number) {
+    return this.chatService.updateChat(id);
   }
 }

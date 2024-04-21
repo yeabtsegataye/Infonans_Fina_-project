@@ -9,7 +9,7 @@ import { CustomersModule } from './customers/customers.module';
 import { Customer } from './customers/entities/customer.entity';
 import { Agent } from './agent/entities/agent.entity';
 import { AuthModule } from './auth/auth.module';
-
+//
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -26,7 +26,7 @@ import { AuthModule } from './auth/auth.module';
     ChatModule,
     AgentModule,
     CustomersModule,
-    AuthModule
+  //AuthModule
   ],
   controllers: [],
   providers: [],

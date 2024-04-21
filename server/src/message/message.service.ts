@@ -15,7 +15,7 @@ export class MessageService {
   async create(createMessageDto: CreateMessageDto) {
     try {
       const { content, customer_id, agentId } = createMessageDto;
-      if(!content && !customer_id && !agentId){ throw new Error(`some filed is empty`);}
+      if(!content || !customer_id || !agentId){ throw new Error(`some filed is empty`);}
       // Create a new message entity
       const newMessage = this.messageRepository.create(
         createMessageDto
