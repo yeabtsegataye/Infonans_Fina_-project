@@ -15,46 +15,45 @@ export class ChatService {
     private readonly chatRepository: Repository<Chat>,
   ) {}
 
-  async create(createChatDto: CreateChatDto) {
-    try {
-      if (
-        !createChatDto.Title ||
-        !createChatDto.chat_sender
-      ) {
-        throw new BadRequestException(' some fields are required');
-      }
-      // Check if a chat already exists with the same sender and unresolved session
-      const existingChat = await this.chatRepository.findOne({
-        where: {
-          chat_sender: createChatDto.chat_sender,
-          session: SessionStatus.OPEN || SessionStatus.IN_SESSION, // Check for unresolved session
-        },
-      });
+    async create(createChatDto: CreateChatDto) {
+      try {
+        if (
+          !createChatDto.Title ||
+          !createChatDto.chat_sender
+        ) {
+          throw new BadRequestException(' some fields are required');
+        }
+        //Check if a chat already exists with the same sender and unresolved session
+        const existingChat = await this.chatRepository.query(`
+            SELECT * FROM chat
+            WHERE chatSenderId = ?
+            AND session IN (?, ?)
+          `, [createChatDto.chat_sender, SessionStatus.OPEN, SessionStatus.IN_SESSION]);
 
-      if (existingChat) {
-        console.log('existed ')
-        return existingChat;
-      }
-      // If no existing chat found, create a new one
-      if (!createChatDto.chat_sender || !createChatDto.Title) {
-        throw new BadRequestException('Sender and text are required');
-      }
-      const newChat = this.chatRepository
-        .createQueryBuilder()
-        .insert()
-        .into(Chat)
-        .values({
-          chat_sender: createChatDto.chat_sender,
-          Title: createChatDto.Title,
-        })
-        .execute();
+        if (existingChat.length > 0) {
+          console.log('existed ', createChatDto.chat_sender)
+          return existingChat;
+        }
+        // If no existing chat found, create a new one
+        if (!createChatDto.chat_sender || !createChatDto.Title) {
+          throw new BadRequestException('Sender and text are required');
+        }
+        const newChat = await this.chatRepository
+          .createQueryBuilder()
+          .insert()
+          .into(Chat)
+          .values({
+            chat_sender: createChatDto.chat_sender,
+            Title: createChatDto.Title,
+          })
+          .execute();
 
-      return newChat;
-    } catch (error) {
-      // Handle any errors (e.g., database errors)
-      return `Failed to create chat: ${error.message}`;
+        return newChat;
+      } catch (error) {
+        // Handle any errors (e.g., database errors)
+        return `Failed to create chat: ${error.message}`;
+      }
     }
-  }
   /////////////////////
   async setSessionToInSession(id: number): Promise<Chat> {
     const chat = await this.chatRepository.findOne({ where: { id } });
