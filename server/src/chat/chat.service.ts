@@ -7,12 +7,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Chat, SessionStatus } from './entities/chat.entity';
 import { CreateChatDto } from './dto/create-chat.dto';
+import { WebsocketGateway } from 'src/socket/websocket.gateway';
 
 @Injectable()
 export class ChatService {
   constructor(
     @InjectRepository(Chat)
     private readonly chatRepository: Repository<Chat>,
+    private socket : WebsocketGateway
   ) {}
 
     async create(createChatDto: CreateChatDto) {
@@ -31,9 +33,16 @@ export class ChatService {
           `, [createChatDto.chat_sender, SessionStatus.OPEN, SessionStatus.IN_SESSION]);
 
         if (existingChat.length > 0) {
-          console.log('existed ', createChatDto.chat_sender)
+          console.log('existed ', createChatDto.chat_sender),
+          console.log("existed", createChatDto.session)
+
           return existingChat;
         }
+
+        // const senderNotExist = await this.chatRepository.query(`
+        //     SELECT * FROM chat
+        //     WHERE chatSender
+        // `)
         // If no existing chat found, create a new one
         if (!createChatDto.chat_sender || !createChatDto.Title) {
           throw new BadRequestException('Sender and text are required');
@@ -47,6 +56,8 @@ export class ChatService {
             Title: createChatDto.Title,
           })
           .execute();
+          console.log(newChat);
+          
 
         return newChat;
       } catch (error) {

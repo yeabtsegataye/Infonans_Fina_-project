@@ -7,6 +7,7 @@ import { jwtConstants } from './constants';
 import { AuthGuard } from './auth.guard';
 import { APP_GUARD } from '@nestjs/core';
 import { Agent } from 'src/agent/entities/agent.entity';
+import { WebsocketGateway } from 'src/socket/websocket.gateway';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Agent]),
@@ -16,7 +17,7 @@ import { Agent } from 'src/agent/entities/agent.entity';
     signOptions: { expiresIn: '60s' },
   }),],
   controllers: [AuthController],
-  providers: [AuthService,
+  providers: [AuthService, WebsocketGateway,
     { // remove this to make manual guard
       provide: APP_GUARD, // to make the guard for all routh
       useClass: AuthGuard,

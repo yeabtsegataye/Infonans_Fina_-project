@@ -53,7 +53,7 @@ export class AuthService {
     if (!isMatch) {
       throw new UnauthorizedException();
     }
-    const payload = { id: data.id, email: data.email };
+    const payload = { id: data.id, email: data.email, role: "agent" };
     const access_token =  await this.jwtService.signAsync(payload)
     return { access_token , payload};
   }

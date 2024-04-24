@@ -9,6 +9,7 @@ import { CustomersModule } from './customers/customers.module';
 import { Customer } from './customers/entities/customer.entity';
 import { Agent } from './agent/entities/agent.entity';
 import { AuthModule } from './auth/auth.module';
+import { WebsocketGateway } from './socket/websocket.gateway';
 //
 @Module({
   imports: [
@@ -29,7 +30,7 @@ import { AuthModule } from './auth/auth.module';
   //AuthModule
   ],
   controllers: [],
-  providers: [],
+  providers: [WebsocketGateway],
   exports: [],
 })
 export class AppModule {}
