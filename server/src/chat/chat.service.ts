@@ -67,6 +67,7 @@ export class ChatService {
     }
     ///////////
     async getCustomers(createChatDto: CreateChatDto){
+      console.log(createChatDto, "tati")
       try{
         if(!createChatDto.chat_receiver){
           throw new BadRequestException('you have not talked to customers before.');
@@ -88,13 +89,31 @@ export class ChatService {
       }
       
     }
+
+    //************GET ALL CUSTOMERS *************/ 
+  async getAllCustomers(){
+    try{
+      const customers = await this.chatRepository.query(`
+      SELECT * FROM chat`)
+      
+     if(customers.length > 0){
+      console.log('customers available');
+      
+      return customers
+     }
+    }catch(error){
+      return `failed to fetch customers`
+    }   
+  }
   /////////////////////
-  async setSessionToInSession(id: number): Promise<Chat> {
-    const chat = await this.chatRepository.findOne({ where: { id } });
+  async setSessionToInSession(createChatDto: CreateChatDto){
+    console.log(createChatDto)
+    const chat = await this.chatRepository.findOne({ where: { id : createChatDto.chatId } });
     if (!chat) {
       throw new NotFoundException('Chat not found');
     }
     chat.session = SessionStatus.IN_SESSION;
+   chat.chat_receiver = createChatDto.chat_receiver
     return this.chatRepository.save(chat);
   }
   ///////////////////////
