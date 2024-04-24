@@ -24,4 +24,15 @@ export class ChatController {
   async updateChat(@Param('id') id: number) {
     return this.chatService.updateChat(id);
   }
+
+  @Post('get')
+  async getCustomers(@Body() createChatDto: CreateChatDto){
+    console.log('here');
+    
+    return this.chatService.getCustomers(createChatDto)
+  }
+
+  @Get('getAll')
+  async getAllCustomers(@Body() createChatDto: CreateChatDto){
+    return this.chatService.getAllCustomers(createChatDto)}
 }

@@ -7,14 +7,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Chat, SessionStatus } from './entities/chat.entity';
 import { CreateChatDto } from './dto/create-chat.dto';
-import { WebsocketGateway } from 'src/socket/websocket.gateway';
+import { WebSocketGateways } from 'src/socket/websocket.gateway';
 
 @Injectable()
 export class ChatService {
   constructor(
     @InjectRepository(Chat)
     private readonly chatRepository: Repository<Chat>,
-    private socket : WebsocketGateway
+    private readonly websocketGateway: WebSocketGateways // Inject the WebSocket gateway
   ) {}
 
     async create(createChatDto: CreateChatDto) {
@@ -35,7 +35,6 @@ export class ChatService {
         if (existingChat.length > 0) {
           console.log('existed ', createChatDto.chat_sender),
           console.log("existed", createChatDto.session)
-
           return existingChat;
         }
 
@@ -43,6 +42,8 @@ export class ChatService {
         //     SELECT * FROM chat
         //     WHERE chatSender
         // `)
+
+        ////If 
         // If no existing chat found, create a new one
         if (!createChatDto.chat_sender || !createChatDto.Title) {
           throw new BadRequestException('Sender and text are required');
@@ -58,7 +59,7 @@ export class ChatService {
           .execute();
           console.log(newChat);
           
-
+          this.websocketGateway.emitToAgents(newChat);
         return newChat;
       } catch (error) {
         // Handle any errors (e.g., database errors)
@@ -90,4 +91,47 @@ export class ChatService {
     }
     /// code left
   }
+
+  //*******get customers
+  async getCustomers(createChatDto: CreateChatDto){
+    try{
+      if(!createChatDto.chat_receiver){
+        throw new BadRequestException('you have not talked to customers before.');
+      }
+      
+      const customers = await this.chatRepository.query(`
+      SELECT * FROM chat
+      WHERE chatReceiverId = ? 
+    `, [createChatDto.chat_receiver])
+      
+     if(customers.length > 0){
+      console.log('customers available');
+      
+      return customers
+     }
+    }catch(error){
+      return `failed to fetch customers with agent id ${createChatDto.chat_receiver}`
+    }   
+  }
+
+  //************GET ALL CUSTOMERS *************/ 
+  async getAllCustomers(createChatDto: CreateChatDto){
+    try{
+      if(!createChatDto.chat_receiver){
+        throw new BadRequestException('no customers.');
+      }
+      
+      const customers = await this.chatRepository.query(`
+      SELECT * FROM chat`)
+      
+     if(customers.length > 0){
+      console.log('customers available');
+      
+      return customers
+     }
+    }catch(error){
+      return `failed to fetch customers`
+    }   
+  }
+
 }
