@@ -9,7 +9,7 @@ import { CustomersModule } from './customers/customers.module';
 import { Customer } from './customers/entities/customer.entity';
 import { Agent } from './agent/entities/agent.entity';
 import { AuthModule } from './auth/auth.module';
-import { WebsocketGateway } from './socket/websocket.gateway';
+import { WebSocketGateways } from './socket/websocket.gateway';
 //
 @Module({
   imports: [
@@ -17,8 +17,8 @@ import { WebsocketGateway } from './socket/websocket.gateway';
       type: 'mysql',
       host: 'localhost',
       port: 3306,
-      username: 'beti',
-      password: 'beti',
+      username: 'tati',
+      password: '123',
       database: 'Customer_support',
       entities: [Chat, Message,Customer,Agent],
       synchronize: false,// for production set it true
@@ -27,10 +27,11 @@ import { WebsocketGateway } from './socket/websocket.gateway';
     ChatModule,
     AgentModule,
     CustomersModule,
-  //AuthModule
+    AuthModule
+  
   ],
   controllers: [],
-  providers: [WebsocketGateway],
+  providers: [WebSocketGateways],
   exports: [],
 })
 export class AppModule {}

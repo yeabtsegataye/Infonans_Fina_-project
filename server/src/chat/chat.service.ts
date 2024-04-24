@@ -7,14 +7,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Chat, SessionStatus } from './entities/chat.entity';
 import { CreateChatDto } from './dto/create-chat.dto';
-import { WebsocketGateway } from 'src/socket/websocket.gateway';
+// import { WebsocketGateway } from 'src/socket/websocket.gateway';
 
 @Injectable()
 export class ChatService {
   constructor(
     @InjectRepository(Chat)
     private readonly chatRepository: Repository<Chat>,
-    private socket : WebsocketGateway
+    // private socket : WebsocketGateway
   ) {}
 
     async create(createChatDto: CreateChatDto) {
@@ -64,6 +64,29 @@ export class ChatService {
         // Handle any errors (e.g., database errors)
         return `Failed to create chat: ${error.message}`;
       }
+    }
+    ///////////
+    async getCustomers(createChatDto: CreateChatDto){
+      try{
+        if(!createChatDto.chat_receiver){
+          throw new BadRequestException('you have not talked to customers before.');
+        }
+        console.log('ok here');
+        
+        const customers = await this.chatRepository.query(`
+        SELECT * FROM chat
+        WHERE chatReceiverId = ? 
+      `, [createChatDto.chat_receiver])
+        
+       if(customers.length > 0){
+        console.log('customers available');
+        
+        return customers
+       }
+      }catch(error){
+        return `failed to fetch customers with agent id ${createChatDto.chat_receiver}`
+      }
+      
     }
   /////////////////////
   async setSessionToInSession(id: number): Promise<Chat> {
