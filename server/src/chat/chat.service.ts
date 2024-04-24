@@ -116,11 +116,7 @@ export class ChatService {
 
   //************GET ALL CUSTOMERS *************/ 
   async getAllCustomers(createChatDto: CreateChatDto){
-    try{
-      if(!createChatDto.chat_receiver){
-        throw new BadRequestException('no customers.');
-      }
-      
+    try{      
       const customers = await this.chatRepository.query(`
       SELECT * FROM chat`)
       
@@ -133,5 +129,4 @@ export class ChatService {
       return `failed to fetch customers`
     }   
   }
-
 }
