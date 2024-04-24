@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { ChatService } from './chat.service';
 import { CreateChatDto } from './dto/create-chat.dto';
 import { Chat } from './entities/chat.entity';
@@ -14,6 +22,11 @@ export class ChatController {
   @Patch(':id/in-session')
   async setSessionToInSession(@Param('id') id: number): Promise<Chat> {
     return this.chatService.setSessionToInSession(id);
+  }
+
+  @Post('get')
+  async getCustomers(@Body() createChatDto: CreateChatDto) {
+    return this.chatService.getCustomers(createChatDto);
   }
 
   @Patch(':id/resolved')
