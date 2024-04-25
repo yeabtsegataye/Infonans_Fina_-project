@@ -71,38 +71,38 @@ export default function Home() {
     setChatContainerStyle,
   ]);
   //////////////////////
+  const getChats = async () => {
+    try {
+      // const token = localStorage.getItem('access_token');
+
+      // if (!token) {
+      //   console.warn('No token found. User ID cannot be retrieved.');
+      //   return; // Early exit if no token
+      // }
+        const response = await axios.post(
+        'http://localhost:8000/chat/get',{
+          chat_receiver: 3
+        },
+        // {
+        //   headers: {
+        //     Authorization: `Bearer ${token}`, // Include token for authentication
+        //   },
+        // }
+      );
+
+      setChat(response.data);
+    } catch (error) {
+      console.error('Error fetching chat data:', error);
+    }
+  };
+
   useEffect(() => {
-    const getChats = async () => {
-      try {
-        const token = localStorage.getItem('access_token');
-  
-        if (!token) {
-          console.warn('No token found. User ID cannot be retrieved.');
-          return; // Early exit if no token
-        }
-          const response = await axios.get(
-          'http://localhost:8000/chat/get',
-          {
-            headers: {
-              Authorization: `Bearer ${token}`, // Include token for authentication
-            },
-          }
-        );
-  
-        setChat(response.data);
-      } catch (error) {
-        console.error('Error fetching chat data:', error);
-      }
-    };
-  
     getChats();
   }, []);
-  
+  console.log(chat, 'the chat')
 
  //////////////////
-  const getMessage = () => {
-    console.log("geitng Message");
-  };
+
   return (
     <main>
       <MainContainer

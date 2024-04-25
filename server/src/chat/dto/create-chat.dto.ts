@@ -11,6 +11,6 @@ export class CreateChatDto {
     chat_sender: Customer;
     chat_receiver: Agent;
     session : SessionStatus;
-    chatId: number
+    chatId: number;
   }
   

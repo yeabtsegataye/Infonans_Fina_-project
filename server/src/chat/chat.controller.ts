@@ -19,9 +19,14 @@ export class ChatController {
   create(@Body() createChatDto: CreateChatDto) {
     return this.chatService.create(createChatDto);
   }
-  @Patch(':id/in-session')
-  async setSessionToInSession(@Param('id') id: number): Promise<Chat> {
-    return this.chatService.setSessionToInSession(id);
+  @Patch('in-session')
+  async setSessionToInSession(@Body() createChatDto: CreateChatDto): Promise<Chat> {
+    return this.chatService.setSessionToInSession(createChatDto);
+  }
+
+  @Get('getAll')
+  async getAllCustomers() {
+    return this.chatService.getAllCustomers();
   }
 
   @Post('get')
@@ -29,8 +34,8 @@ export class ChatController {
     return this.chatService.getCustomers(createChatDto);
   }
 
-  @Patch(':id/resolved')
-  async setSessionToResolved(@Param('id') id: number): Promise<Chat> {
+  @Patch('resolved')
+  async setSessionToResolved(@Param('id') id: number) {
     return this.chatService.setSessionToResolved(id);
   }
   @Patch('update/:id')
