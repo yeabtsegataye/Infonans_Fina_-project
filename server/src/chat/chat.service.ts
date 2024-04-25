@@ -9,7 +9,7 @@ import { Chat, SessionStatus } from './entities/chat.entity';
 import { CreateChatDto } from './dto/create-chat.dto';
 import { WebSocketGateways } from 'src/socket/websocket.gateway';
 
-@Injectable()
+@Injectable() 
 export class ChatService {
   constructor(
     @InjectRepository(Chat)
@@ -72,7 +72,6 @@ export class ChatService {
           .execute();
           console.log(newChat);
           
-          this.websocketGateway.emitToAgents(newChat);
         return newChat;
       } catch (error) {
         // Handle any errors (e.g., database errors)
@@ -80,14 +79,55 @@ export class ChatService {
       }
     }
     ///////////
-   
+
+    async getCustomers(createChatDto: CreateChatDto){
+      console.log(createChatDto, "tati")
+      try{
+        if(!createChatDto.chat_receiver){
+          throw new BadRequestException('you have not talked to customers before.');
+        }
+        console.log('ok here');
+        
+        const customers = await this.chatRepository.query(`
+        SELECT * FROM chat
+        WHERE chatReceiverId = ? 
+      `, [createChatDto.chat_receiver])
+        
+       if(customers.length > 0){
+        console.log('customers available');
+        
+        return customers
+       }
+      }catch(error){
+        return `failed to fetch customers with agent id ${createChatDto.chat_receiver}`
+      }
+      
+    }
+
+    //************GET ALL CUSTOMERS *************/ 
+  async getAllCustomers(){
+    try{
+      const customers = await this.chatRepository.query(`
+      SELECT * FROM chat`)
+      
+     if(customers.length > 0){
+      console.log('customers available');
+      
+      return customers
+     }
+    }catch(error){
+      return `failed to fetch customers`
+    }   
+  }
   /////////////////////
-  async setSessionToInSession(id: number): Promise<Chat> {
-    const chat = await this.chatRepository.findOne({ where: { id } });
+  async setSessionToInSession(createChatDto: CreateChatDto){
+    console.log(createChatDto)
+    const chat = await this.chatRepository.findOne({ where: { id : createChatDto.chatId } });
     if (!chat) {
       throw new NotFoundException('Chat not found');
     }
     chat.session = SessionStatus.IN_SESSION;
+   chat.chat_receiver = createChatDto.chat_receiver
     return this.chatRepository.save(chat);
   }
   ///////////////////////
@@ -107,41 +147,5 @@ export class ChatService {
     /// code left
   }
 
-  //*******get customers
-  async getCustomers(createChatDto: CreateChatDto){
-    try{
-      if(!createChatDto.chat_receiver){
-        throw new BadRequestException('you have not talked to customers before.');
-      }
-      
-      const customers = await this.chatRepository.query(`
-      SELECT * FROM chat
-      WHERE chatReceiverId = ? 
-    `, [createChatDto.chat_receiver])
-      
-     if(customers.length > 0){
-      console.log('customers available');
-      
-      return customers
-     }
-    }catch(error){
-      return `failed to fetch customers with agent id ${createChatDto.chat_receiver}`
-    }   
-  }
-
-  //************GET ALL CUSTOMERS *************/ 
-  async getAllCustomers(createChatDto: CreateChatDto){
-    try{      
-      const customers = await this.chatRepository.query(`
-      SELECT * FROM chat`)
-      
-     if(customers.length > 0){
-      console.log('customers available');
-      
-      return customers
-     }
-    }catch(error){
-      return `failed to fetch customers`
-    }   
-  }
+ 
 }

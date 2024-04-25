@@ -7,7 +7,7 @@ import {
   MessageInput,
   Sidebar,
   Search,
-  ConversationList,
+  ConversationList, 
   Conversation,
   Avatar,
   InfoButton,
@@ -15,7 +15,7 @@ import {
   ToggleConversationListUsingBackButtonStory,
 } from "@chatscope/chat-ui-kit-react";
 import styles from "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
-import UserListComponent from "./right";
+// import UserListComponent from "./right";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 export default function Home() {
@@ -111,42 +111,23 @@ export default function Home() {
           height: "96vh",
         }}
       >
-        <Sidebar position="left" style={sidebarStyle}>
-          <Search placeholder="Search..." />
-          <ConversationList>
-            <Conversation onClick={handleConversationClick}>
-              <Avatar
-                src="https://chatscope.io/storybook/react/assets/lilly-aj6lnGPk.svg"
-                name="Lilly"
-                status="available"
-                style={conversationAvatarStyle}
-              />
-              <Conversation.Content
-                name="Lilly"
-                lastSenderName="Lilly"
-                info="Yes i can do it for you"
-                style={conversationContentStyle}
-              />
-            </Conversation>
-          </ConversationList>
-        </Sidebar>
-
+        
         <ChatContainer style={chatContainerStyle}>
-          <ConversationHeader>
-            <ConversationHeader.Back onClick={handleBackClick} />
-            <ToggleConversationListUsingBackButtonStory />
-            <Avatar
-              name="Zoe"
-              src="https://chatscope.io/storybook/react/assets/zoe-E7ZdmXF0.svg"
-            />
-            <ConversationHeader.Content
-              info="Active 10 mins ago"
-              userName="Zoe"
-            />
-            <ConversationHeader.Actions>
-              <InfoButton />
-            </ConversationHeader.Actions>
-          </ConversationHeader>
+
+        <ConversationHeader>
+          <ConversationHeader.Back />
+          {/* <Avatar
+            name="Eliot"
+            src="https://chatscope.io/storybook/react/assets/eliot-JNkqSAth.svg"
+          /> */}
+          <ConversationHeader.Content>
+            <span style={{ textAlign: 'center', color: 'green', animation: 'text-color-change 2s infinite alternate', fontSize: '25px' }}>
+              Welcome to our customer support
+            </span>
+          </ConversationHeader.Content>
+        </ConversationHeader>
+
+
 
           <MessageList
           // typingIndicator={<TypingIndicator content="Zoe is typing" />}
@@ -179,12 +160,12 @@ export default function Home() {
           </MessageList>
           <MessageInput placeholder="Type message here" />
         </ChatContainer>
-        <Sidebar position="right">
+        {/* <Sidebar position="right">
           <UserListComponent />
           {/* {  <button class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
                 Open
               </button>} */}
-        </Sidebar>
+        {/* </Sidebar> */} 
       </MainContainer>
     </main>
   );
