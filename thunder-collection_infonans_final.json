@@ -1,0 +1,319 @@
+{
+    "clientName": "Thunder Client",
+    "collectionName": "infonans_final",
+    "collectionId": "1b501be7-4f29-468d-89d6-d91a162faa45",
+    "dateExported": "2024-04-22T12:24:51.869Z",
+    "version": "1.2",
+    "folders": [
+        {
+            "_id": "793c0348-e1bd-4f77-9f76-044b5279b4e7",
+            "name": "Auth",
+            "containerId": "",
+            "created": "2024-04-19T13:35:26.537Z",
+            "sortNum": 30000
+        },
+        {
+            "_id": "ecc30f47-5266-405f-b7d9-73efa564dd81",
+            "name": "chat",
+            "containerId": "",
+            "created": "2024-04-21T04:27:42.633Z",
+            "sortNum": 40000
+        },
+        {
+            "_id": "3d6c93a4-fb65-443e-b365-88653f38b89e",
+            "name": "Message",
+            "containerId": "",
+            "created": "2024-04-21T04:28:02.399Z",
+            "sortNum": 50000
+        },
+        {
+            "_id": "967634a8-bf01-4086-8b20-8a837655cc9e",
+            "name": "Agent",
+            "containerId": "",
+            "created": "2024-04-21T05:17:57.007Z",
+            "sortNum": 60000
+        },
+        {
+            "_id": "63294103-dee1-4f64-bddb-9435aea38c6b",
+            "name": "Customer",
+            "containerId": "",
+            "created": "2024-04-21T05:17:59.480Z",
+            "sortNum": 70000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "efa389dd-b9dd-480b-9158-dddd3bc7588d",
+            "colId": "1b501be7-4f29-468d-89d6-d91a162faa45",
+            "containerId": "793c0348-e1bd-4f77-9f76-044b5279b4e7",
+            "name": "signup",
+            "url": "http://localhost:8000/auth/signup",
+            "method": "POST",
+            "sortNum": 70000,
+            "created": "2024-04-19T13:35:26.537Z",
+            "modified": "2024-04-19T13:36:41.792Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"tati.@\",\n  \"Password\": \"123\",\n  \"phone\": 12332\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "3f69efbe-0e32-4de7-8a29-bfb0a0d87628",
+            "colId": "1b501be7-4f29-468d-89d6-d91a162faa45",
+            "containerId": "ecc30f47-5266-405f-b7d9-73efa564dd81",
+            "name": "create_chat",
+            "url": "http://localhost:8000/chat/create",
+            "method": "POST",
+            "sortNum": 70000,
+            "created": "2024-04-21T04:27:42.634Z",
+            "modified": "2024-04-21T07:40:55.827Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"Title\": \"test 1\",\n  \"chat_sender\": 5\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "cda45703-0244-4584-ad9e-473b3252471d",
+            "colId": "1b501be7-4f29-468d-89d6-d91a162faa45",
+            "containerId": "3d6c93a4-fb65-443e-b365-88653f38b89e",
+            "name": "signup",
+            "url": "http://localhost:8000/auth/signup",
+            "method": "POST",
+            "sortNum": 70000,
+            "created": "2024-04-21T04:28:02.399Z",
+            "modified": "2024-04-21T04:28:02.399Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"tati.@\",\n  \"Password\": \"123\",\n  \"phone\": 12332\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "b69f78a1-6ee9-48c0-a5c3-47f3157e549c",
+            "colId": "1b501be7-4f29-468d-89d6-d91a162faa45",
+            "containerId": "967634a8-bf01-4086-8b20-8a837655cc9e",
+            "name": "get_agent",
+            "url": "http://localhost:8000/agent/",
+            "method": "GET",
+            "sortNum": 70000,
+            "created": "2024-04-21T05:17:57.007Z",
+            "modified": "2024-04-21T05:25:03.236Z",
+            "headers": []
+        },
+        {
+            "_id": "28a6a809-20a2-4d2b-b710-1714909d9380",
+            "colId": "1b501be7-4f29-468d-89d6-d91a162faa45",
+            "containerId": "63294103-dee1-4f64-bddb-9435aea38c6b",
+            "name": "create_customer",
+            "url": "http://localhost:8000/customers/create",
+            "method": "POST",
+            "sortNum": 70000,
+            "created": "2024-04-21T05:17:59.480Z",
+            "modified": "2024-04-21T06:47:12.909Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"c1.@\",\n  \"service_name\": \"dagu\",\n  \"phone\": 12332,\n  \"name\":\"yabtaye\",\n  \"isBlocked\": false\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "0ff0e55c-a782-4d43-9813-6daf4594fa75",
+            "colId": "1b501be7-4f29-468d-89d6-d91a162faa45",
+            "containerId": "967634a8-bf01-4086-8b20-8a837655cc9e",
+            "name": "get_agent_one",
+            "url": "http://localhost:8000/agent/singl/7",
+            "method": "GET",
+            "sortNum": 72500,
+            "created": "2024-04-21T05:32:25.629Z",
+            "modified": "2024-04-21T05:33:03.251Z",
+            "headers": []
+        },
+        {
+            "_id": "f1032524-e7ee-48e9-ba9b-41776d74c3bc",
+            "colId": "1b501be7-4f29-468d-89d6-d91a162faa45",
+            "containerId": "967634a8-bf01-4086-8b20-8a837655cc9e",
+            "name": "delete_agent",
+            "url": "http://localhost:8000/agent/delete/4",
+            "method": "DELETE",
+            "sortNum": 75000,
+            "created": "2024-04-21T05:25:20.863Z",
+            "modified": "2024-04-21T05:28:51.037Z",
+            "headers": []
+        },
+        {
+            "_id": "64c889de-6c5f-4ec4-8a66-867daff2d30d",
+            "colId": "1b501be7-4f29-468d-89d6-d91a162faa45",
+            "containerId": "793c0348-e1bd-4f77-9f76-044b5279b4e7",
+            "name": "login",
+            "url": "http://localhost:8000/auth/login",
+            "method": "POST",
+            "sortNum": 80000,
+            "created": "2024-04-19T13:35:26.538Z",
+            "modified": "2024-04-21T05:36:18.054Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"yenu.@\",\n  \"Password\": \"123\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "2a79622a-f623-4751-82ba-9fca4ceb7de9",
+            "colId": "1b501be7-4f29-468d-89d6-d91a162faa45",
+            "containerId": "ecc30f47-5266-405f-b7d9-73efa564dd81",
+            "name": "login",
+            "url": "http://localhost:8000/auth/login",
+            "method": "POST",
+            "sortNum": 80000,
+            "created": "2024-04-21T04:27:42.635Z",
+            "modified": "2024-04-21T04:27:42.634Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"tati.@\",\n  \"Password\": \"123\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "74271ea8-b8e7-412c-990d-c5c18dbd40a8",
+            "colId": "1b501be7-4f29-468d-89d6-d91a162faa45",
+            "containerId": "3d6c93a4-fb65-443e-b365-88653f38b89e",
+            "name": "login",
+            "url": "http://localhost:8000/auth/login",
+            "method": "POST",
+            "sortNum": 80000,
+            "created": "2024-04-21T04:28:02.400Z",
+            "modified": "2024-04-21T04:28:02.399Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"tati.@\",\n  \"Password\": \"123\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "a2b9880d-8065-4073-ba44-84900f75feb8",
+            "colId": "1b501be7-4f29-468d-89d6-d91a162faa45",
+            "containerId": "967634a8-bf01-4086-8b20-8a837655cc9e",
+            "name": "create_agent",
+            "url": "http://localhost:8000/agent/add",
+            "method": "POST",
+            "sortNum": 80000,
+            "created": "2024-04-21T05:17:57.008Z",
+            "modified": "2024-04-21T05:24:58.639Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"yenu.@\",\n  \"password\": \"123\",\n  \"phone\": 1232,\n  \"name\": \"yeab\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "5b41dbb4-7ae4-4588-bb9a-c2ecb6af8919",
+            "colId": "1b501be7-4f29-468d-89d6-d91a162faa45",
+            "containerId": "63294103-dee1-4f64-bddb-9435aea38c6b",
+            "name": "block_customer",
+            "url": "http://localhost:8000/customers/block/1",
+            "method": "PATCH",
+            "sortNum": 80000,
+            "created": "2024-04-21T05:17:59.481Z",
+            "modified": "2024-04-21T06:49:30.504Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"tati.@\",\n  \"Password\": \"123\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "ca937f12-108f-441d-8b7c-befe44bc5f27",
+            "colId": "1b501be7-4f29-468d-89d6-d91a162faa45",
+            "containerId": "967634a8-bf01-4086-8b20-8a837655cc9e",
+            "name": "update_agent",
+            "url": "http://localhost:8000/agent/update/5",
+            "method": "PATCH",
+            "sortNum": 90000,
+            "created": "2024-04-21T05:29:27.231Z",
+            "modified": "2024-04-21T05:30:46.767Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"nahom.@\",\n  \"password\": \"123\",\n  \"phone\": 1232\n }",
+                "form": []
+            }
+        },
+        {
+            "_id": "50cacaff-416a-463c-bdf3-27436fc1c6a4",
+            "colId": "1b501be7-4f29-468d-89d6-d91a162faa45",
+            "containerId": "63294103-dee1-4f64-bddb-9435aea38c6b",
+            "name": "Unblock_customer ",
+            "url": "http://localhost:8000/customers/Unblock/1",
+            "method": "PATCH",
+            "sortNum": 90000,
+            "created": "2024-04-21T06:51:34.625Z",
+            "modified": "2024-04-21T06:52:03.889Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"tati.@\",\n  \"Password\": \"123\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "2b8b09f0-51ed-4cad-a0bc-bcab412c7a8b",
+            "colId": "1b501be7-4f29-468d-89d6-d91a162faa45",
+            "containerId": "63294103-dee1-4f64-bddb-9435aea38c6b",
+            "name": "get_cusotmers",
+            "url": "http://localhost:8000/customers/",
+            "method": "GET",
+            "sortNum": 95000,
+            "created": "2024-04-21T06:58:23.315Z",
+            "modified": "2024-04-21T06:58:49.588Z",
+            "headers": []
+        },
+        {
+            "_id": "287afed3-9c82-4f47-a658-27b3ece9bea0",
+            "colId": "1b501be7-4f29-468d-89d6-d91a162faa45",
+            "containerId": "63294103-dee1-4f64-bddb-9435aea38c6b",
+            "name": "get_cusotmers_single",
+            "url": "http://localhost:8000/customers/single/2",
+            "method": "GET",
+            "sortNum": 97500,
+            "created": "2024-04-21T06:59:00.047Z",
+            "modified": "2024-04-21T07:02:54.097Z",
+            "headers": []
+        },
+        {
+            "_id": "04ea74f1-d704-4657-bc36-e942afaee965",
+            "colId": "1b501be7-4f29-468d-89d6-d91a162faa45",
+            "containerId": "63294103-dee1-4f64-bddb-9435aea38c6b",
+            "name": "delete_customer ",
+            "url": "http://localhost:8000/customers/delete/1",
+            "method": "DELETE",
+            "sortNum": 100000,
+            "created": "2024-04-21T06:51:36.697Z",
+            "modified": "2024-04-21T06:52:59.047Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"tati.@\",\n  \"Password\": \"123\"\n}",
+                "form": []
+            }
+        }
+    ],
+    "ref": "x0b3XNrKt6hMas6F1FgWdMNDwZpZQeD_ezS5H4BgdnozF1qLiwdjXOpX1c0EN3jJOd1_w4v4AEVA10_uNvf8fw"
+}

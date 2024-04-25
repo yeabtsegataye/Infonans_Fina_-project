@@ -8,6 +8,7 @@ import { AuthGuard } from './auth.guard';
 import { APP_GUARD } from '@nestjs/core';
 import { Agent } from 'src/agent/entities/agent.entity';
 import { WebSocketGateways } from 'src/socket/websocket.gateway';
+// import { WebSocketGateways } from 'src/socket/websocket.gateway';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Agent]),

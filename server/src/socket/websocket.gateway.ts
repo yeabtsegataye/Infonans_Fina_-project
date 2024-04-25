@@ -9,8 +9,8 @@ export class WebSocketGateways implements OnGatewayConnection, OnGatewayDisconne
 
   handleConnection(client: Socket) {
     console.log(`Client connected: ${client.id}`);
-  }
 
+  }
   handleDisconnect(client: Socket) {
     console.log(`Client disconnected: ${client.id}`);
   }
@@ -23,5 +23,7 @@ export class WebSocketGateways implements OnGatewayConnection, OnGatewayDisconne
   // Method to emit message to a specific agent
   emitToAgent(agentId: string, message: any) {
     this.server.to(agentId).emit('messageToAgent', message);
+    
   }
+
 }

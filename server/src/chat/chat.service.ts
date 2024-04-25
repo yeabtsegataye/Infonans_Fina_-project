@@ -29,20 +29,33 @@ export class ChatService {
         const existingChat = await this.chatRepository.query(`
             SELECT * FROM chat
             WHERE chatSenderId = ?
-            AND session IN (?, ?)
+            AND session = ? OR ?
           `, [createChatDto.chat_sender, SessionStatus.OPEN, SessionStatus.IN_SESSION]);
 
         if (existingChat.length > 0) {
-          console.log('existed ', createChatDto.chat_sender),
-          console.log("existed", createChatDto.session)
+          console.log('existed ', createChatDto.chat_sender)
           return existingChat;
+        } 
+        
+        const resolvedChat = await this.chatRepository.query(`
+          SELECT * FROM CHAT 
+          WHERE  chatSenderId = ?
+          AND session = ?
+        `, [createChatDto.chat_sender, SessionStatus.RESOLVED])
+
+        if(resolvedChat > 0){
+          const newChat = await this.chatRepository
+          .createQueryBuilder()
+          .insert()
+          .into(Chat)
+          .values({
+            chat_sender: createChatDto.chat_sender,
+            Title: createChatDto.Title,
+          })
+          .execute();
+          console.log(newChat);
+          return newChat;
         }
-
-        // const senderNotExist = await this.chatRepository.query(`
-        //     SELECT * FROM chat
-        //     WHERE chatSender
-        // `)
-
         ////If 
         // If no existing chat found, create a new one
         if (!createChatDto.chat_sender || !createChatDto.Title) {
@@ -66,6 +79,8 @@ export class ChatService {
         return `Failed to create chat: ${error.message}`;
       }
     }
+    ///////////
+   
   /////////////////////
   async setSessionToInSession(id: number): Promise<Chat> {
     const chat = await this.chatRepository.findOne({ where: { id } });
